@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:split_application/utilis/colors/color_constant.dart';
 import 'package:split_application/utilis/components/app_dimensions.dart';
 import 'package:split_application/utilis/components/widget_components.dart';
+import 'package:split_application/views/add_expense_screen.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -18,6 +20,7 @@ class HomeScreen extends ConsumerWidget {
           SplitGroupsList(),
         ],
       ),
+      floatingActionButton: addSplitButton(context: context),
     );
   }
 }
@@ -108,6 +111,28 @@ Widget groupsCard() {
         ),
       ),
       title: Text("Group Name"),
+    ),
+  );
+}
+
+Widget addSplitButton({context}) {
+  return FloatingActionButton(
+    backgroundColor: AppColors.primaryColor,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(30),
+    ),
+    onPressed: () {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => AddExpenseScreen(),
+          ));
+    },
+    child: Icon(
+      CupertinoIcons.add,
+      weight: 100,
+      size: 30,
+      color: AppColors.secondaryColor,
     ),
   );
 }
