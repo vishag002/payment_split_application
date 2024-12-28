@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:split_application/utilis/colors/color_constant.dart';
 import 'package:split_application/utilis/components/app_dimensions.dart';
