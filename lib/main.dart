@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:split_application/utilis/components/app_dimensions.dart';
+import 'package:split_application/views/authentication/login_screen.dart';
 import 'package:split_application/views/bottom_nav_bar_screen.dart';
 
 void main() {
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
         builder: (context) {
           // Setup MediaQuery dimensions
           AppDimensions.setup(context);
-          return BottomNavBarScreen();
+          return LoginScreen();
         },
       ),
     );
