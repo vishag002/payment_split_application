@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:split_application/utilis/colors/color_constant.dart';
 import 'package:split_application/utilis/text/text_constant.dart';
 import 'package:split_application/views/authentication/login_screen.dart';
-import 'package:split_application/views/bottom_nav_bar_screen.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
