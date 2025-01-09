@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:split_application/utilis/components/app_dimensions.dart';
+import 'package:split_application/utilis/constant/constants.dart';
 import 'package:split_application/views/authentication/login_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-const supabaseUrl = 'https://dqoutbfudrbrkfxtgbxq.supabase.co';
-const supabaseKey = String.fromEnvironment('SUPABASE_KEY');
-
 Future<void> main() async {
   await Supabase.initialize(url: supabaseUrl, anonKey: supabaseKey);
-  runApp(MyApp());
+  runApp(
+    const ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
