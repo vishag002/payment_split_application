@@ -95,11 +95,11 @@ Widget _signUpButton(
         if (passwordController.text == confirmPasswordController.text) {
           final authController = ref.read(authControllerProvider.notifier);
           await authController.signUp(
-              emailController.text, passwordController.text);
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => BottomNavBarScreen()),
-          );
+              emailController.text, passwordController.text, context);
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => BottomNavBarScreen()),
+          // );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text("Passwords do not match!")),

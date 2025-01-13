@@ -1,4 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:split_application/utilis/constant/constants.dart';
+import 'package:split_application/views/bottom_nav_bar_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthService {
@@ -64,27 +67,71 @@ class AuthController extends StateNotifier<AsyncValue<User?>> {
   //   }
   // }
 
-  // SignIn
-  Future<void> signIn(String email, String password) async {
+  Future<void> signIn(
+      String email, String password, BuildContext context) async {
     try {
       state = const AsyncValue.loading();
-      final response =
-          await _authService.signInWithEmailAndPassword(email, password);
-      state = AsyncValue.data(response.user);
+
+      final response = await supabase.auth.signInWithPassword(
+        email: email,
+        password: password,
+      );
+
+      if (response.user != null) {
+        state = AsyncValue.data(response.user);
+
+        // Check if context is still valid
+        if (context.mounted) {
+          // Navigate to home screen and remove all previous routes
+          Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+              builder: (context) => const BottomNavBarScreen(),
+            ),
+            (route) => false, // This removes all previous routes
+          );
+        }
+      } else {
+        throw Exception('Login failed - no user returned');
+      }
     } catch (e) {
       state = AsyncValue.error(e, StackTrace.current);
+
+      // Show error message if context is still valid
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.toString()),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
     }
   }
 
   // SignUp
-  Future<void> signUp(String email, String password) async {
+  Future<void> signUp(
+      String email, String password, BuildContext context) async {
     try {
       state = const AsyncValue.loading();
+
       final response =
           await _authService.signUpWithEmailAndPass(email, password);
-      state = AsyncValue.data(response.user);
+
+      if (response.user != null) {
+        state = AsyncValue.data(response.user);
+        // Only navigate on successful signup
+        if (context.mounted) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const BottomNavBarScreen()),
+          );
+        }
+      } else {
+        throw Exception('Signup failed');
+      }
     } catch (e) {
       state = AsyncValue.error(e, StackTrace.current);
+      rethrow; // Rethrow to handle in UI
     }
   }
 

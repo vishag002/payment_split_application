@@ -93,12 +93,10 @@ Widget loginButton(
             _passwordController.text.isNotEmpty) {
           final authController = ref.read(authControllerProvider.notifier);
           await authController.signIn(
-              _emailController.text, _passwordController.text);
+              _emailController.text, _passwordController.text, context);
           authController.signIn(
-            _emailController.text,
-            _passwordController.text,
-          );
-          login(context);
+              _emailController.text, _passwordController.text, context);
+          //login(context);
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text("login credentials dont match")),
