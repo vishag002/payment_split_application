@@ -88,10 +88,8 @@ Widget EqualSplit() {
   return Container(
     height: 150,
     width: 200,
-    // color: Colors.amberAccent,
-    child: const Center(
-      child: Text('Split View', style: TextStyle(fontSize: 16)),
-    ),
+    //color: Colors.amberAccent,
+    child: splitTile(),
   );
 }
 
@@ -100,9 +98,7 @@ Widget CustomSplit() {
     height: 150,
     width: 200,
     //color: Colors.lightBlueAccent,
-    child: const Center(
-      child: Text('Custom Split View', style: TextStyle(fontSize: 16)),
-    ),
+    child: splitTile(),
   );
 }
 
@@ -132,5 +128,26 @@ Widget continueButton({context}) {
         ),
       ),
     ),
+  );
+}
+
+Widget splitTile() {
+  return ListView.builder(
+    shrinkWrap: true, // Allows the ListView to wrap its contents
+    physics: AlwaysScrollableScrollPhysics(), // Prevents internal scrolling
+    itemCount: 5,
+    itemBuilder: (context, index) {
+      return ListTile(
+        title: Text("name"),
+        trailing: SizedBox(
+          width: 100, // Set a fixed width for the TextField
+          child: TextField(
+            decoration: InputDecoration(
+              border: null,
+            ),
+          ),
+        ),
+      );
+    },
   );
 }
