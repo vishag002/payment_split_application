@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:split_application/controller/split_payment_controller.dart';
 import 'package:split_application/utilis/colors/color_constant.dart';
 import 'package:split_application/utilis/components/app_dimensions.dart';
 import 'package:split_application/utilis/text/text_constant.dart';
 import 'package:split_application/views/add_members_screen.dart';
 
-class AddExpenseScreen extends StatelessWidget {
+class AddExpenseScreen extends ConsumerWidget {
   const AddExpenseScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final TextEditingController amountController = TextEditingController();
     return Scaffold(
       appBar: AppBar(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           _header(),
-          _amountTextField(),
-          _nextButton(context: context),
+          _amountTextField(amountController: amountController),
+          //  _nextButton(context: context, amountController: amountController),
+          _nextButton(
+              context: context, ref: ref, amountController: amountController),
         ],
       ),
     );
@@ -30,7 +35,7 @@ Widget _header() {
   );
 }
 
-Widget _amountTextField() {
+Widget _amountTextField({amountController}) {
   return Padding(
     padding: EdgeInsets.symmetric(
       horizontal: AppDimensions.widthPercentage(30),
@@ -50,6 +55,7 @@ Widget _amountTextField() {
                 8), // Add spacing between the rupee symbol and the text field
         Expanded(
           child: TextField(
+            controller: amountController,
             keyboardType: TextInputType.number, // Restrict to number input
             decoration: InputDecoration(
               hintText: "Enter amount", // Placeholder text
@@ -74,14 +80,25 @@ Widget _amountTextField() {
   );
 }
 
-Widget _nextButton({context}) {
+Widget _nextButton(
+    {required BuildContext context, required WidgetRef ref, amountController}) {
   return InkWell(
     onTap: () {
-      Navigator.push(
+      final amount = double.tryParse(amountController.text);
+      if (amount != null) {
+        // Use `ref` to interact with the provider
+        ref.read(splitPaymentProvider.notifier).saveAmount(amount);
+        Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => AddMembersScreen(),
-          ));
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Please enter a valid amount")),
+        );
+      }
     },
     child: Container(
       height: AppDimensions.heightPercentage(6),
