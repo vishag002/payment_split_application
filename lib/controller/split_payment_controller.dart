@@ -25,15 +25,13 @@ class SplitPaymentController extends StateNotifier<double?> {
     }
   }
 
-  //split equally
-  // Future<void> SplitEqually() {
-  //   //
-  // }
+  // Split equally among members
+  double? getEqualSplit(int memberCount) {
+    if (state == null || memberCount <= 0) return null;
+    return state! / memberCount;
+  }
 
-  // //custom split
-  // Future<void> CustomSplit() {
-  //   //
-  // }
+  //split equally
 }
 
 final splitPaymentProvider =

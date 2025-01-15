@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:split_application/controller/select_member_controller.dart';
+import 'package:split_application/controller/split_payment_controller.dart';
 import 'package:split_application/utilis/colors/color_constant.dart';
 import 'package:split_application/utilis/components/app_dimensions.dart';
 import 'package:split_application/utilis/text/text_constant.dart';
@@ -131,45 +133,64 @@ Widget continueButton({context}) {
   );
 }
 
+// Widget for displaying split amounts
 Widget splitEqualTile() {
-  return ListView.builder(
-    shrinkWrap: true, // Allows the ListView to wrap its contents
-    physics: AlwaysScrollableScrollPhysics(), // Prevents internal scrolling
-    itemCount: 5,
-    itemBuilder: (context, index) {
-      return ListTile(
-        title: Text("name"),
-        trailing: SizedBox(
-          width: 100, // Set a fixed width for the TextField
-          child: TextFormField(
-            readOnly: true,
-            decoration: InputDecoration(
-              border: null,
+  return Consumer(
+    builder: (context, ref, child) {
+      final members = ref.watch(membersProvider);
+      final totalAmount = ref.watch(splitPaymentProvider);
+      final splitAmount = totalAmount != null
+          ? (totalAmount / members.length).toStringAsFixed(2)
+          : '0.00';
+
+      return ListView.builder(
+        shrinkWrap: true,
+        physics: const AlwaysScrollableScrollPhysics(),
+        itemCount: members.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(members[index].name),
+            trailing: SizedBox(
+              width: 100,
+              child: TextFormField(
+                readOnly: true,
+                initialValue: splitAmount,
+                decoration: const InputDecoration(
+                  border: null,
+                  prefixText: '\$', // Add currency symbol if needed
+                ),
+              ),
             ),
-          ),
-        ),
+          );
+        },
       );
     },
   );
 }
 
 Widget splitCustomTile() {
-  return ListView.builder(
-    shrinkWrap: true, // Allows the ListView to wrap its contents
-    physics: AlwaysScrollableScrollPhysics(), // Prevents internal scrolling
-    itemCount: 5,
-    itemBuilder: (context, index) {
-      return ListTile(
-        title: Text("name"),
-        trailing: SizedBox(
-          width: 100, // Set a fixed width for the TextField
-          child: TextFormField(
-            readOnly: false,
-            decoration: InputDecoration(
-              border: null,
+  return Consumer(
+    builder: (context, ref, child) {
+      final members = ref.watch(membersProvider);
+
+      return ListView.builder(
+        shrinkWrap: true,
+        physics: const AlwaysScrollableScrollPhysics(),
+        itemCount: members.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(members[index].name),
+            trailing: SizedBox(
+              width: 100,
+              child: TextFormField(
+                readOnly: false,
+                decoration: const InputDecoration(
+                  border: null,
+                ),
+              ),
             ),
-          ),
-        ),
+          );
+        },
       );
     },
   );
