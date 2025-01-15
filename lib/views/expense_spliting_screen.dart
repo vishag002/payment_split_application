@@ -89,7 +89,7 @@ Widget EqualSplit() {
     height: 150,
     width: 200,
     //color: Colors.amberAccent,
-    child: splitTile(),
+    child: splitEqualTile(),
   );
 }
 
@@ -98,7 +98,7 @@ Widget CustomSplit() {
     height: 150,
     width: 200,
     //color: Colors.lightBlueAccent,
-    child: splitTile(),
+    child: splitCustomTile(),
   );
 }
 
@@ -131,7 +131,7 @@ Widget continueButton({context}) {
   );
 }
 
-Widget splitTile() {
+Widget splitEqualTile() {
   return ListView.builder(
     shrinkWrap: true, // Allows the ListView to wrap its contents
     physics: AlwaysScrollableScrollPhysics(), // Prevents internal scrolling
@@ -141,7 +141,30 @@ Widget splitTile() {
         title: Text("name"),
         trailing: SizedBox(
           width: 100, // Set a fixed width for the TextField
-          child: TextField(
+          child: TextFormField(
+            readOnly: true,
+            decoration: InputDecoration(
+              border: null,
+            ),
+          ),
+        ),
+      );
+    },
+  );
+}
+
+Widget splitCustomTile() {
+  return ListView.builder(
+    shrinkWrap: true, // Allows the ListView to wrap its contents
+    physics: AlwaysScrollableScrollPhysics(), // Prevents internal scrolling
+    itemCount: 5,
+    itemBuilder: (context, index) {
+      return ListTile(
+        title: Text("name"),
+        trailing: SizedBox(
+          width: 100, // Set a fixed width for the TextField
+          child: TextFormField(
+            readOnly: false,
             decoration: InputDecoration(
               border: null,
             ),

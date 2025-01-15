@@ -52,6 +52,8 @@ class AddMemberControllerNotifier extends StateNotifier<List<Member>> {
 
 // Create the provider
 final membersProvider =
-    StateNotifierProvider<AddMemberControllerNotifier, List<Member>>((ref) {
-  return AddMemberControllerNotifier();
-});
+    StateNotifierProvider<AddMemberControllerNotifier, List<Member>>(
+  (ref) {
+    return AddMemberControllerNotifier();
+  },
+);

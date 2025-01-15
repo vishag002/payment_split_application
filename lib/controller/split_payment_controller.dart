@@ -24,6 +24,16 @@ class SplitPaymentController extends StateNotifier<double?> {
       print("Error loading amount from Shared Preferences: $e");
     }
   }
+
+  //split equally
+  // Future<void> SplitEqually() {
+  //   //
+  // }
+
+  // //custom split
+  // Future<void> CustomSplit() {
+  //   //
+  // }
 }
 
 final splitPaymentProvider =
