@@ -22,6 +22,7 @@ class AppComponents {
     return AppBar(
       backgroundColor: AppColors.secondaryColor,
       elevation: 4,
+      automaticallyImplyLeading: false,
     );
   }
 

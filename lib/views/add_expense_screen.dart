@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:split_application/controller/split_payment_controller.dart';
+import 'package:split_application/controller/equal_split_controller.dart';
 import 'package:split_application/utilis/colors/color_constant.dart';
 import 'package:split_application/utilis/components/app_dimensions.dart';
 import 'package:split_application/utilis/text/text_constant.dart';
